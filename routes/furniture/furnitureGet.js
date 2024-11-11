@@ -1,13 +1,29 @@
 const express = require('express');
 const router = express();
-//import database here 
+
+const furnitureDataBase = require('../../database');
 
 router.get("/", (req, res) => {
-    res.status(200).json({ message: "GET Endpoint for furniture"})
+    furnitureDataBase.furnitureData.findAll()
+        .then(dbData => {
+            res.json(dbData);
+        })
+        .catch(error => res.status(400).json("Error:", error))
+
 });
 
 router.get("/:id", (req, res) => {
-    res.status(200).json({ message: "GET Endpoint for furniture id"})
+
+    furniture_id = req.params.id;
+
+    furnitureDataBase.furnitureData.findOne({
+        where: { id: furniture_id }
+    })
+    .then(dbData => {
+        res.json(dbData);
+    })
+    .catch(error => res.status(404).json("Error: ", error));
+    
 });
 
 module.exports = router;
