@@ -4,7 +4,9 @@ const router = express();
 const roomDatabase = require('../../database')
 
 router.get("/", (req, res) => {
-    roomDatabase.roomData.findAll()
+    roomDatabase.Room.findAll({
+        include: [{ model: roomDatabase.Furniture }]
+        })
         .then(dbData => {
             res.json(dbData);
         })
@@ -16,8 +18,9 @@ router.get("/:id", (req, res) => {
 
     room_id = req.params.id;
 
-    roomDatabase.roomData.findOne({
-        where: { id: room_id }
+    roomDatabase.Room.findOne({
+        where: { id: room_id },
+        include: [{ model: roomDatabase.Furniture }]
     })
     .then(dbData => {
         res.json(dbData);
@@ -28,14 +31,3 @@ router.get("/:id", (req, res) => {
 
 module.exports = router;
 
-/*
-
-Test POST Json
-
-{
-    "length": 1.0,
-    "width": 5.2,
-    "height": 7
-}
-
-*/

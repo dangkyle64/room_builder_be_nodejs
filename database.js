@@ -18,13 +18,14 @@ const db = {};
 db.Sequelize = Sequelize; // Assign as property to be used in other files
 db.sequelizeData = sequelize;
 
-db.furnitureData = furnitureModel(sequelize, Sequelize);
-db.roomData = roomModel(sequelize, Sequelize);
+db.Furniture = furnitureModel(sequelize, Sequelize);
+db.Room = roomModel(sequelize, Sequelize);
 
-module.exports = db;
-
-const models = require('./models/indexModel');
-Object.assign(db, models)
+Object.keys(db).forEach((modelName) => {
+    if (db[modelName].associate) {
+        db[modelName].associate(db);
+    }
+});
 
 db.sequelizeData.sync()
     .then(() => {
@@ -33,3 +34,5 @@ db.sequelizeData.sync()
     .catch((error) => {
         console.error("Error creating database tables: ", error);
     })
+
+module.exports = db;

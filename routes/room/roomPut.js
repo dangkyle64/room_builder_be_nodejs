@@ -13,7 +13,7 @@ router.put("/:id", async (req, res) => {
     const { length, width, height } = req.body;
 
     try {
-        const room = await roomDatabase.roomData.findOne({
+        const room = await roomDatabase.Room.findOne({
             where: {id: room_id}
         })
 

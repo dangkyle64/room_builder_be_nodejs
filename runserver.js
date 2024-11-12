@@ -32,7 +32,7 @@ app.use("/api/v1/furniture", postFurnitureEndpoint)
 app.use("/api/v1/furniture", putFurnitureEndpoint);
 app.use("/api/v1/furniture", deleteFurnitureEndpoint);
 
-const PORT = 3000;
+const PORT = 8000;
 
 app.listen(PORT, () => {
     console.log(`Express server running on http://localhost:${PORT}`);

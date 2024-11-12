@@ -1,6 +1,6 @@
 function RoomModel (sequelize, DataTypes) {
-    return sequelize.define(
-        'room', {
+    const Room = sequelize.define(
+        'Room', {
 
             //id is auto-generated
 
@@ -18,8 +18,13 @@ function RoomModel (sequelize, DataTypes) {
                 type: DataTypes.FLOAT,
                 allowNull: false, 
             },
-        },
-    );
+        });
+
+    Room.associate = (models) => {
+        Room.hasMany(models.Furniture, { foreignKey: 'roomId' });
+    };
+
+    return Room;
 };
 
 module.exports = RoomModel;

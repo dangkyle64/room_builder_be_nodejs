@@ -6,7 +6,7 @@ const roomDatabase = require('../../database');
 router.post("/", (req, res) => {
     const { length, width, height } = req.body;
 
-    roomDatabase.roomData.create({ length, width, height})
+    roomDatabase.Room.create({ length, width, height})
         .then(room => {
             res.status(201).json(room);
             console.log("Room has been created.");
@@ -18,3 +18,15 @@ router.post("/", (req, res) => {
 });
 
 module.exports = router;
+
+/*
+
+Test POST Json
+
+{
+    "length": 1.0,
+    "width": 5.2,
+    "height": 7
+}
+
+*/

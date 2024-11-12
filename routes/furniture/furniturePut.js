@@ -10,7 +10,7 @@ router.put("/:id", async (req, res) => {
     const { position_x, position_y, position_z, length, width, height } = req.body;
 
     try {
-        const furniture = await furnitureDataBase.furnitureData.findOne({
+        const furniture = await furnitureDataBase.Furniture.findOne({
             where: {id: furniture_id}
         });
 

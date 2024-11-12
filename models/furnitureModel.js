@@ -1,8 +1,18 @@
 function furnitureModel (sequelize, DataTypes)  {
-    return sequelize.define(
-        'furniture', {
+    const Furniture = sequelize.define(
+        'Furniture', {
 
             // auto-generates id 
+            
+            roomId: {
+                type: DataTypes.INTEGER,
+                references: {
+                    model: 'Room',
+                    key: 'id',
+                },
+
+                allowNull: false, //Foreign key can't be null
+            },
 
             furniture_type: {
                 type: DataTypes.ENUM(
@@ -42,8 +52,13 @@ function furnitureModel (sequelize, DataTypes)  {
                 type: DataTypes.FLOAT,
                 allowNull: true,
             },
-        },
-    );
-};
+        });
+
+    Furniture.associate = (models) => {
+        Furniture.belongsTo(models.Room, { foreignKey: 'roomId'})
+    };
+
+    return Furniture;
+}
 
 module.exports = furnitureModel;

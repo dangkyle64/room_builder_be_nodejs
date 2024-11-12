@@ -4,9 +4,9 @@ const router = express();
 const furnitureDataBase = require('../../database');
 
 router.post("/", (req, res) => {
-    const {position_x, position_y, position_z, length, width, height} = req.body;
+    const {roomId, position_x, position_y, position_z, length, width, height} = req.body;
 
-    furnitureDataBase.furnitureData.create({ position_x, position_y, position_z, length, width, height})
+    furnitureDataBase.Furniture.create({ roomId, position_x, position_y, position_z, length, width, height})
         .then(furniture => {
             res.status(201).json(furniture);
             console.log("Furniture has been created");

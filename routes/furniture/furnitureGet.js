@@ -4,7 +4,7 @@ const router = express();
 const furnitureDataBase = require('../../database');
 
 router.get("/", (req, res) => {
-    furnitureDataBase.furnitureData.findAll()
+    furnitureDataBase.Furniture.findAll()
         .then(dbData => {
             res.json(dbData);
         })
@@ -16,7 +16,7 @@ router.get("/:id", (req, res) => {
 
     furniture_id = req.params.id;
 
-    furnitureDataBase.furnitureData.findOne({
+    furnitureDataBase.Furniture.findOne({
         where: { id: furniture_id }
     })
     .then(dbData => {

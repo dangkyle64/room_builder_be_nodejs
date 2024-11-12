@@ -8,7 +8,7 @@ router.delete("/:id", async (req, res) => {
     room_id = req.params.id;
 
     try {
-        const room = await roomDatabase.roomData.findOne({
+        const room = await roomDatabase.Room.findOne({
             where: {id: room_id}
         })
 
