@@ -13,7 +13,9 @@ const putFurnitureEndpoint = require('./routes/furniture/furniturePut');
 const deleteFurnitureEndpoint = require('./routes/furniture/furnitureDelete');
 
 corsOptions = {
-    origin: 'http://localhost:3000'
+    origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],  // Allow only the frontend at localhost:3000
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Allowed HTTP methods
+    allowedHeaders: ['Content-Type', 'Authorization'],  // Allowed headers
 };
 
 app.use(cors(corsOptions)); // set up cors here
