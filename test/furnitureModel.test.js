@@ -25,7 +25,6 @@ beforeEach(async () => {
         height: { type: INTEGER } 
     });
 
-    // define model
     Furniture = furnitureModel(sequelize, DataTypes);
 
     // Set up the foreign key relationship explicitly
@@ -36,6 +35,7 @@ beforeEach(async () => {
 });
 
 afterEach(async () => {
+
     // close sequelize connection after test
     await sequelize.close();
 });
@@ -52,9 +52,20 @@ test('should have the correct attributes', async () => {
     assert.strictEqual(attributes.width.type.constructor.name, 'FLOAT');
     assert.strictEqual(attributes.height.type.constructor.name, 'FLOAT');
 
-    //test null accepeted
-    assert.strictEqual(attributes.roomId.allowNull, false);
+    
 });
+
+test('should see the null constraints for attributes', async () => {
+    const attributes = Furniture.rawAttributes;
+
+    //test null constraints
+    assert.strictEqual(attributes.roomId.allowNull, false);
+    assert.strictEqual(attributes.furniture_type.allowNull, false);
+    assert.strictEqual(attributes.length.allowNull, true);
+    assert.strictEqual(attributes.width.allowNull, true);
+    assert.strictEqual(attributes.height.allowNull, true);
+    
+})
 
 test('should see default values for x, y, z values', async () => {
 
@@ -83,6 +94,35 @@ test('should not allow Furniture creation without foreign key', async () => {
 
         assert.fail('Expected an error but did not get an error');
     } catch  (error) {
+        assert.strictEqual(error.name, 'SequelizeValidationError');
+    }
+});
+
+test('should not allow Furniture creation with the incorrect  foreign key', async () => {
+    try {
+        await Furniture.create({
+            roomId: -123,
+            furniture_type: "box",
+        });
+
+        assert.fail('Expected an error but did not get an error');
+    } catch (error) {
+        assert.strictEqual(error.name, 'SequelizeForeignKeyConstraintError');
+    }
+});
+
+test('should not be able to have negative measurements for furniture attributes', async () => {
+    try {
+        await Furniture.create({
+            roomId: 1,
+            furniture_type: "box",
+            length: -1,
+            width: -3,
+            height: -12142424
+        });
+
+        assert.fail('Expect an error but did not get an error');
+    } catch (error) {
         assert.strictEqual(error.name, 'SequelizeValidationError');
     }
 });

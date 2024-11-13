@@ -7,16 +7,25 @@ function RoomModel (sequelize, DataTypes) {
             length: {
                 type: DataTypes.FLOAT,
                 allowNull: false,
+                validate: {
+                    min: 0
+                }
             },
 
             width: {
                 type: DataTypes.FLOAT,
                 allowNull: false,
+                validate: {
+                    min: 0
+                }
             },
 
             height: {
                 type: DataTypes.FLOAT,
                 allowNull: false, 
+                validate: {
+                    min: 0
+                }
             },
         }, {
             tableName: 'Rooms'

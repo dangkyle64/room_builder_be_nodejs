@@ -20,7 +20,7 @@ function furnitureModel (sequelize, DataTypes)  {
                     "chair",
                     "table",
                 ),
-                allowNull: true,
+                allowNull: false,
             },
 
             position_x: {
@@ -41,16 +41,25 @@ function furnitureModel (sequelize, DataTypes)  {
             length: {
                 type: DataTypes.FLOAT,
                 allowNull: true,
+                validate: {
+                    min: 0
+                }
             },
 
             width: {
                 type: DataTypes.FLOAT,
                 allowNull: true,
+                validate: {
+                    min: 0
+                }
             },
 
             height: {
                 type: DataTypes.FLOAT,
                 allowNull: true,
+                validate: {
+                    min: 0
+                }
             },
         });
 
