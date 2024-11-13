@@ -18,6 +18,8 @@ function RoomModel (sequelize, DataTypes) {
                 type: DataTypes.FLOAT,
                 allowNull: false, 
             },
+        }, {
+            tableName: 'Rooms'
         });
 
     Room.associate = (models) => {

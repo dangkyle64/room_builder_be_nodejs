@@ -7,7 +7,7 @@ function furnitureModel (sequelize, DataTypes)  {
             roomId: {
                 type: DataTypes.INTEGER,
                 references: {
-                    model: 'Room',
+                    model: 'Rooms',
                     key: 'id',
                 },
 
