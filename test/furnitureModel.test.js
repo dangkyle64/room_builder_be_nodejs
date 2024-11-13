@@ -51,6 +51,9 @@ test('should have the correct attributes', async () => {
     assert.strictEqual(attributes.length.type.constructor.name, 'FLOAT');
     assert.strictEqual(attributes.width.type.constructor.name, 'FLOAT');
     assert.strictEqual(attributes.height.type.constructor.name, 'FLOAT');
+
+    //test null accepeted
+    assert.strictEqual(attributes.roomId.allowNull, false);
 });
 
 test('should see default values for x, y, z values', async () => {
@@ -70,4 +73,16 @@ test('should see default values for x, y, z values', async () => {
     assert.strictEqual(furnitureTest.position_x, 0);
     assert.strictEqual(furnitureTest.position_y, 0);
     assert.strictEqual(furnitureTest.position_z, 0);
+});
+
+test('should not allow Furniture creation without foreign key', async () => {
+    try {
+        await Furniture.create({
+            furniture_type: "box",
+        });
+
+        assert.fail('Expected an error but did not get an error');
+    } catch  (error) {
+        assert.strictEqual(error.name, 'SequelizeValidationError');
+    }
 });
