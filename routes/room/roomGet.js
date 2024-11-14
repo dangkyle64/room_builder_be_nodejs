@@ -1,31 +1,27 @@
 const express = require('express');
 const router = express();
 
-const roomDatabase = require('../../database')
+const { getAllRooms, getRoomById } = require('../../services/getRoomService');
 
-router.get("/", (req, res) => {
-    roomDatabase.Room.findAll({
-        include: [{ model: roomDatabase.Furniture }]
-        })
-        .then(dbData => {
-            res.json(dbData);
-        })
-        .catch(error => res.status(400).json("Error: ", error))
+router.get("/", async (req, res) => {
 
+    try {
+        const rooms = await getAllRooms();
+        res.json(rooms);
+    } catch(error) {
+        res.status(400).json({ error: error.message});
+    }
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", async (req, res) => {
 
-    room_id = req.params.id;
-
-    roomDatabase.Room.findOne({
-        where: { id: room_id },
-        include: [{ model: roomDatabase.Furniture }]
-    })
-    .then(dbData => {
-        res.json(dbData);
-    })
-    .catch(error => res.status(404).json("Error: ", error));
+    try {
+        const room = await getRoomById(req.params.id);
+        console.log('Room from getRoomById:', room);
+        res.json(room);
+    } catch(error) {
+        res.status(400).json({ error: error.message});
+    }
     
 });
 
